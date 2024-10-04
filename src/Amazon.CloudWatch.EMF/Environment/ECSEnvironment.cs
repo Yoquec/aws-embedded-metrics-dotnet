@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using Amazon.CloudWatch.EMF.Config;
@@ -159,8 +160,8 @@ namespace Amazon.CloudWatch.EMF.Environment
             if (_ecsMetadata?.Image == null) return;
 
             var imageName = _ecsMetadata.Image;
-            var splitImageNames = imageName.Split("\\/");
-            _ecsMetadata.FormattedImageName = splitImageNames[^1];
+            var splitImageNames = imageName.Split('/', '\\');
+            _ecsMetadata.FormattedImageName = splitImageNames.Last();
         }
     }
 

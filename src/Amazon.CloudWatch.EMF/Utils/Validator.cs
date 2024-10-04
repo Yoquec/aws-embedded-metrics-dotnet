@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Concurrent;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Amazon.CloudWatch.EMF.Model;
-using static System.Net.WebRequestMethods;
 
 namespace Amazon.CloudWatch.EMF.Utils
 {
@@ -71,7 +69,7 @@ namespace Amazon.CloudWatch.EMF.Utils
                 throw new InvalidMetricException($"Metric name {name} cannot be longer than {Constants.MaxMetricNameLength} characters");
             }
 
-            if (!Double.IsFinite(value))
+            if (double.IsInfinity(value) || double.IsNaN(value))
             {
                 throw new InvalidMetricException($"Metric value {value} must be a finite number");
             }
@@ -85,7 +83,7 @@ namespace Amazon.CloudWatch.EMF.Utils
         /// <summary>
         /// Validates namespace.
         /// </summary>
-        /// <param name="@namespace">Namespace</param>
+        /// <param name="namespace">Namespace</param>
         /// <exception cref="InvalidNamespaceException">Thrown when namespace is invalid</exception>
         internal static void ValidateNamespace(in string @namespace)
         {

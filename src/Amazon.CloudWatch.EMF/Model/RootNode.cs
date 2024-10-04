@@ -110,7 +110,14 @@ namespace Amazon.CloudWatch.EMF.Model
             {
                 foreach (var dimension in dimensionSet.Dimensions)
                 {
-                    dimensions.TryAdd(dimension.Key, dimension.Value);
+                    try
+                    {
+                        dimensions.Add(dimension.Key, dimension.Value);
+                    }
+                    catch
+                    {
+                        // ignored
+                    }
                 }
             }
 
